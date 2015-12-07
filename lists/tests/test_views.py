@@ -1,4 +1,5 @@
 from django.core.urlresolvers import resolve
+from django.utils.html import escape
 from django.test import TestCase
 from django.http import HttpRequest
 from django.template.loader import render_to_string
@@ -65,6 +66,17 @@ class ListViewTest(TestCase):
 
         self.assertRedirects(response, '/lists/%d/' % (correct_list.id,))
 
+    def test_validation_errors_end_up_on_lists_page(self):
+        list_ = List.objects.create()
+        response = self.client.post(
+            '/lists/%d/' % (list_.id,),
+            data={'item_text': ''}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'list.html')
+        expected_error = escape("You can't have an empty list item")
+        self.assertContains(response, expected_error)
+
 class NewListTest(TestCase):
 
     def test_saving_a_POST_request(self):
@@ -95,7 +107,6 @@ class NewListTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'home.html')
         expected_error = "You can&#39;t have an empty list item"
-        print(response.content.decode())
         self.assertContains(response, expected_error)
 
     def test_invalid_list_items_arent_saved(self):
