@@ -3,6 +3,7 @@ from django.test import TestCase
 from lists.models import Item, List
 from lists.forms import ItemForm, EMPTY_LIST_ERROR
 
+
 class HomePageTest(TestCase):
 
     def test_home_page_renders_home_template(self):
@@ -128,7 +129,6 @@ class NewListTest(TestCase):
 
     def test_validation_errors_are_shown_on_home_page(self):
         response = self.client.post('/lists/new', data={'text': ''})
-        print(response.content.decode())
         self.assertContains(response, escape(EMPTY_LIST_ERROR))
 
     def test_invalid_list_items_arent_saved(self):
