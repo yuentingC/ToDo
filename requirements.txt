@@ -1,2 +1,10 @@
 Django==1.8
+django-debug-toolbar==1.4
+ecdsa==0.13
+Fabric==1.10.2
 gunicorn==19.4.1
+paramiko==1.16.0
+pycrypto==2.6.1
+requests==2.8.1
+selenium==2.48.0
+sqlparse==0.1.18
