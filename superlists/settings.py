@@ -41,7 +41,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'lists',
     'debug_toolbar',
-    'accounts'
+    'accounts',
+    'functional_tests',
 )
 
 MIDDLEWARE_CLASSES = (
